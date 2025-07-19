@@ -20,7 +20,7 @@ const Home = () => {
   const funnelRef = useRef<HTMLDivElement>(null);
 
   const [colorConfig, setColorConfig] = useState<FunnelColorConfig>(
-    funnelColorConfigs[2].config,
+    funnelColorConfigs[0].config,
   );
 
   const [isExpanded, setIsExpanded] = useState(false);

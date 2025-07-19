@@ -31,12 +31,11 @@ const ConfigPanel = ({
   className,
 }: ConfigPanelProps) => {
   const configPopupClasses = cn(
-    "absolute -bottom-2 -left-2 z-[100] w-72 rounded-3xl p-6 pb-16 sm:w-full sm:max-w-[500px]",
+    "absolute -bottom-2 -left-2 z-[100] w-72 rounded-3xl p-6 pb-16 sm:w-full sm:max-w-[550px]",
     "bg-glass/90",
     "border-primary/20 border-2",
     "backdrop-blur-[10px]",
     shadowDepthPrimary,
-
     "backdrop-blur-3xl",
   );
 
@@ -55,7 +54,7 @@ const ConfigPanel = ({
           <p className="text-primary text-lg font-semibold">
             Choose a config{" "}
             <span className="text-secondary text-sm">
-              (To see how the funnel changes):
+              (To see how the funnel structure changes):
             </span>
           </p>
           <div className="mt-3 flex flex-wrap gap-3">
@@ -67,7 +66,7 @@ const ConfigPanel = ({
                   setSelectedStage?.(config.data?.[2] ?? config.data?.[0]);
                 }}
                 className={cn(
-                  "cursor-pointer rounded-lg border px-4 py-2 text-sm font-semibold transition-all",
+                  "cursor-pointer rounded-lg border-2 px-4 py-2 text-sm font-semibold transition-all",
                   config.data === funnelData
                     ? "bg-primary border-primary text-white shadow-md"
                     : "border-primary/20 text-primary hover:bg-accent-2/70 hover:backdrop-blur-[2px]",

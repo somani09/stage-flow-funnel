@@ -28,7 +28,7 @@ export const funnelColorConfigs: {
   config: FunnelColorConfig;
 }[] = [
   {
-    title: "Pastel (Default)",
+    title: "Pastel",
     config: {
       gradientStart: "#C9DEF4",
       gradientEnd: "#F5CCD4",
