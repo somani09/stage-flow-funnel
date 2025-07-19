@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { createSvgData } from "./functions/create-svg-data";
 import SVGCreator from "./svg-creator";
 import { cn } from "@/app/utils";
-import { FunnelStage, SvgData } from "./types-and-interfaces";
+import {
+  FunnelColorConfig,
+  FunnelStage,
+  SvgData,
+} from "./types-and-interfaces";
+import { parseColor } from "./functions/generate-gradients";
 
 interface FunnelProps {
   funnelData: FunnelStage[];
@@ -11,8 +16,8 @@ interface FunnelProps {
   className?: string;
   minSectionWidth?: number;
   lastSectionWidth?: number;
+  colorConfig?: FunnelColorConfig;
 }
-
 const Funnel = ({
   funnelData,
   selectedStage,
@@ -20,6 +25,7 @@ const Funnel = ({
   className = "",
   minSectionWidth = 200,
   lastSectionWidth = 100,
+  colorConfig,
 }: FunnelProps) => {
   // Data and functions required for SVG component
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,9 +58,10 @@ const Funnel = ({
       containerWidth,
       minSectionWidth,
       lastSectionWidth,
+      colorConfig,
     );
     setSvgData(generatedSvgData);
-  }, [funnelData, containerWidth, containerHeight]);
+  }, [funnelData, containerWidth, containerHeight, colorConfig]);
 
   return (
     <div className={cn("relative", className)} ref={containerRef}>
@@ -72,12 +79,26 @@ const Funnel = ({
               }
               gradientStart={
                 data.id === selectedStage?.stageId
-                  ? "rgba(160, 68, 255, 1)"
+                  ? `rgba(${parseColor(
+                      colorConfig?.selectedGradientStart ||
+                        colorConfig?.gradientStart ||
+                        "#C1CDF9",
+                      colorConfig?.selectedStartAlpha ??
+                        colorConfig?.startAlpha ??
+                        100,
+                    ).join(",")})`
                   : data.gradientStart
               }
               gradientEnd={
                 data.id === selectedStage?.stageId
-                  ? "rgba(107, 48, 149, 1)"
+                  ? `rgba(${parseColor(
+                      colorConfig?.selectedGradientEnd ||
+                        colorConfig?.gradientEnd ||
+                        "#B188EF",
+                      colorConfig?.selectedEndAlpha ??
+                        colorConfig?.endAlpha ??
+                        100,
+                    ).join(",")})`
                   : data.gradientEnd
               }
               containerWidth={containerWidth}
@@ -90,7 +111,7 @@ const Funnel = ({
           <div
             onClick={() => handleSelection(data)}
             className={cn(
-              "mb-0.5 flex cursor-pointer flex-col items-center justify-center",
+              "flex cursor-pointer flex-col items-center justify-center",
             )}
             style={{
               height: containerHeight / funnelData.length - 2,

@@ -2,10 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Funnel from "@/components/funnel/funnel";
-import { aboutConfigs, dummyFunnelData3 } from "@/components/funnel/configs";
-import { FunnelStage } from "@/components/funnel/types-and-interfaces";
+import { dummyFunnelData3 } from "@/components/funnel/configs";
+import {
+  FunnelColorConfig,
+  FunnelStage,
+} from "@/components/funnel/types-and-interfaces";
 import { cn } from "./utils";
-import { pageConfig } from "./page-config";
+import { funnelColorConfigs, pageConfig } from "./config";
 import InfoPanel from "./info-panel";
 
 const Home = () => {
@@ -15,6 +18,12 @@ const Home = () => {
   );
   const [funnelHeight, setFunnelHeight] = useState<number | null>(null);
   const funnelRef = useRef<HTMLDivElement>(null);
+
+  const [colorConfig, setColorConfig] = useState<FunnelColorConfig>(
+    funnelColorConfigs[2].config,
+  );
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     if (!funnelRef.current) return;
@@ -35,8 +44,6 @@ const Home = () => {
   const scrollHeight = funnelHeight
     ? `${funnelHeight - 180 > 0 ? funnelHeight - 180 : 100}px`
     : "300px";
-
-  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className="flex h-max min-h-screen flex-col pt-12 pr-4 pb-6 pl-32 sm:pr-32">
@@ -71,7 +78,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="bg-accent-1 mt-4 mb-8 h-0.5 max-w-48 rounded-full" />
+      <div className="bg-accent-1 mt-8 mb-8 h-0.5 max-w-48 rounded-full" />
 
       <div className="flex w-full flex-1 flex-col gap-6 lg:flex-row">
         <div
@@ -79,9 +86,11 @@ const Home = () => {
           className="relative flex min-w-[200px] flex-1 lg:w-[30%] lg:min-w-[300px]"
         >
           <Funnel
+            key={JSON.stringify(colorConfig)}
             funnelData={funnelData}
             selectedStage={selectedStage}
             handleSelection={setSelectedStage}
+            colorConfig={colorConfig}
             className="h-full min-h-[500px] w-full"
           />
         </div>
@@ -92,6 +101,8 @@ const Home = () => {
           funnelData={funnelData}
           setFunnelData={setFunnelData}
           setSelectedStage={setSelectedStage}
+          colorConfig={colorConfig}
+          setColorConfig={setColorConfig}
         />
       </div>
     </div>

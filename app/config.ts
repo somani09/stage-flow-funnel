@@ -1,3 +1,5 @@
+import { FunnelColorConfig } from "@/components/funnel/types-and-interfaces";
+
 export const pageConfig = {
   title: "Funnel Visualization",
   description:
@@ -20,3 +22,48 @@ export const pageConfig = {
     },
   ],
 };
+
+export const funnelColorConfigs: {
+  title: string;
+  config: FunnelColorConfig;
+}[] = [
+  {
+    title: "Pastel (Default)",
+    config: {
+      gradientStart: "#C9DEF4",
+      gradientEnd: "#F5CCD4",
+      selectedGradientStart: "#C1CDF9",
+      selectedGradientEnd: "#B188EF",
+      startAlpha: 100,
+      endAlpha: 100,
+      selectedStartAlpha: 100,
+      selectedEndAlpha: 100,
+    },
+  },
+  {
+    title: "Peachy Blush",
+    config: {
+      gradientStart: "#FFD6DC",
+      gradientEnd: "#FFC6CC",
+      selectedGradientStart: "#FFABB5",
+      selectedGradientEnd: "#F28A95",
+      startAlpha: 100,
+      endAlpha: 100,
+      selectedStartAlpha: 100,
+      selectedEndAlpha: 100,
+    },
+  },
+  {
+    title: "Misty Sky",
+    config: {
+      gradientStart: "#CCE4F6",
+      gradientEnd: "#B0D4EF",
+      selectedGradientStart: "#8FC1EA",
+      selectedGradientEnd: "#6BAAE0",
+      startAlpha: 100,
+      endAlpha: 100,
+      selectedStartAlpha: 100,
+      selectedEndAlpha: 100,
+    },
+  },
+];

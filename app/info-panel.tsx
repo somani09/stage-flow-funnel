@@ -1,7 +1,10 @@
 import { aboutConfigs } from "@/components/funnel/configs";
-import { FunnelStage } from "@/components/funnel/types-and-interfaces";
+import {
+  FunnelColorConfig,
+  FunnelStage,
+} from "@/components/funnel/types-and-interfaces";
 import { cn } from "./utils";
-import { pageConfig } from "./page-config";
+import { funnelColorConfigs, pageConfig } from "./config";
 import { useMediaQuery } from "./hooks";
 
 interface Props {
@@ -10,6 +13,8 @@ interface Props {
   funnelData: FunnelStage[];
   setFunnelData: (data: FunnelStage[]) => void;
   setSelectedStage: (stage: FunnelStage | undefined) => void;
+  colorConfig: FunnelColorConfig;
+  setColorConfig: (config: FunnelColorConfig) => void;
   className?: string;
 }
 
@@ -19,6 +24,8 @@ const InfoPanel = ({
   funnelData,
   setFunnelData,
   setSelectedStage,
+  colorConfig,
+  setColorConfig,
   className,
 }: Props) => {
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
@@ -88,6 +95,32 @@ const InfoPanel = ({
               {config.title}
             </button>
           ))}
+        </div>
+        <div className="flex flex-col gap-3">
+          <p className="text-secondary text-lg font-semibold">
+            Choose a color scheme{" "}
+            <span className="text-primary text-sm">
+              (To change gradient colors)
+            </span>
+            :
+          </p>
+          <div className="flex flex-wrap gap-4">
+            {funnelColorConfigs.map(({ title, config }) => (
+              <button
+                key={title}
+                onClick={() => setColorConfig(config)}
+                className={cn(
+                  "cursor-pointer rounded-lg border px-5 py-2 text-sm font-semibold transition-all",
+                  config.gradientStart === colorConfig.gradientStart &&
+                    config.gradientEnd === colorConfig.gradientEnd
+                    ? "bg-primary border-primary text-white shadow-md"
+                    : "border-primary/20 text-primary hover:bg-glass/30 hover:backdrop-blur-[2px]",
+                )}
+              >
+                {title}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

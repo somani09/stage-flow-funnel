@@ -16,3 +16,14 @@ export interface FunnelStage {
   stageConversionName: string;
   value: number;
 }
+
+export interface FunnelColorConfig {
+  gradientStart: string;
+  gradientEnd: string;
+  selectedGradientStart?: string;
+  selectedGradientEnd?: string;
+  startAlpha?: string | number;
+  endAlpha?: string | number;
+  selectedStartAlpha?: string | number;
+  selectedEndAlpha?: string | number;
+}

@@ -1,4 +1,8 @@
-import { FunnelStage, SvgData } from "../types-and-interfaces";
+import {
+  FunnelColorConfig,
+  FunnelStage,
+  SvgData,
+} from "../types-and-interfaces";
 import { calculateWidths } from "./calculate-width";
 import { generateGradientSteps } from "./generate-gradients";
 import { normalizeValues } from "./normalize";
@@ -21,6 +25,7 @@ export function createSvgData(
   containerWidth: number,
   minSectionWidth: number,
   lastSectionWidth: number,
+  colorConfig?: FunnelColorConfig,
 ): SvgData[] {
   // Extract values and find the smallest non-zero value
   const values = funnelData.map((data) =>
@@ -53,17 +58,17 @@ export function createSvgData(
     10,
   );
 
-  // Gradient calculation
-  const gradientStartHex = "#F1DDFF";
-  const gradientStartAlpha = "50%";
-  const gradientEnd = "#D395FF";
-  const gradientEndAlpha = "100%";
+  const gradientStartHex = colorConfig?.gradientStart || "#C9DEF4";
+  const gradientEndHex = colorConfig?.gradientEnd || "#F5CCD4";
+  const startAlpha = colorConfig?.startAlpha ?? "100%";
+  const endAlpha = colorConfig?.endAlpha ?? "100%";
+
   const gradientSteps = generateGradientSteps(
     gradientStartHex,
-    gradientEnd,
+    gradientEndHex,
     funnelData.length,
-    gradientStartAlpha,
-    gradientEndAlpha,
+    startAlpha,
+    endAlpha,
   );
 
   // Create SVG data array

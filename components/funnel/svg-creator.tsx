@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 interface SVGCreatorProps {
   id: number | string;
   topWidth: number;
@@ -6,6 +8,10 @@ interface SVGCreatorProps {
   gradientStart: string;
   gradientEnd: string;
   containerWidth: number;
+}
+
+function sanitize(str: string) {
+  return str.replace(/[^a-zA-Z0-9]/g, "");
 }
 
 const SVGCreator = ({
@@ -43,15 +49,19 @@ const SVGCreator = ({
     // Right curve: Adjusted control points to mirror the left curve accurately
     pathData += `C${bottomEndX},${height * 0.7} ${topEndX},${height * 0.3} ${topEndX},0 `;
 
-    pathData += 'Z'; // Close the path
+    pathData += "Z"; // Close the path
 
     return pathData;
   }
 
-  const gradientId = `linear-gradient-${id}`;
+  const gradientHash = useMemo(() => {
+    return sanitize(gradientStart + gradientEnd);
+  }, [gradientStart, gradientEnd]);
+
+  const gradientId = `linear-gradient-${id}-${gradientHash}`;
 
   return (
-    <svg width={'100%'} height={height} xmlns="http://www.w3.org/2000/svg">
+    <svg width={"100%"} height={height} xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id={gradientId} x1="50%" y1="0%" x2="50%" y2="100%">
           <stop offset="0" stopColor={gradientStart} />
