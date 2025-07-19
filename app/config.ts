@@ -1,7 +1,7 @@
 import { FunnelColorConfig } from "@/components/funnel/types-and-interfaces";
 
 export const pageConfig = {
-  title: "Funnel Visualization",
+  title: "Stage Flow Funnel",
   description:
     "A responsive, SVG-based funnel chart with dynamic Bézier shapes, double normalization, gradient interpolation, and ResizeObserver-powered layout — fully interactive and built with TypeScript for precision and reusability.",
   funnelInfoSections: [
