@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn, shadowDepthPrimary } from "@/app/utils";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useCloseOnOutsideClick } from "@/app/hooks";
 
 interface SidebarProps {
   className?: string;
@@ -41,19 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ className, onClose }) => {
 
   const sidebarRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target as Node)
-      ) {
-        onClose?.();
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [onClose]);
+  useCloseOnOutsideClick(sidebarRef, onClose);
 
   return (
     <aside ref={sidebarRef} className={cn(sidebarContainerClasses, className)}>

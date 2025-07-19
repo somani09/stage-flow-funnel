@@ -6,6 +6,9 @@ import {
 import { cn } from "./utils";
 import { funnelColorConfigs, pageConfig } from "./config";
 import { useMediaQuery } from "./hooks";
+import { BsGearFill } from "react-icons/bs";
+import ConfigPanel from "./config-panel";
+import { useState } from "react";
 
 interface Props {
   funnelHeight: number | null;
@@ -29,6 +32,7 @@ const InfoPanel = ({
   className,
 }: Props) => {
   const isLargeScreen = useMediaQuery("(min-width: 1024px)");
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
 
   return (
     <div
@@ -45,7 +49,6 @@ const InfoPanel = ({
       }}
     >
       <h2 className="text-3xl font-semibold">Implementation Notes</h2>
-
       <div
         className="border-primary/10 space-y-6 overflow-y-auto border-b-1 pr-2 text-base"
         style={{ maxHeight: scrollHeight }}
@@ -68,60 +71,42 @@ const InfoPanel = ({
           </a>
         </div>
       </div>
-
-      <div className="flex flex-col gap-3">
-        <p className="text-secondary text-lg font-semibold">
-          Choose a config{" "}
-          <span className="text-primary text-sm">
-            (To see how the funnel changes)
+      <div
+        className={cn(
+          "relative flex items-center justify-start",
+          "translate-z-0 transition-opacity duration-300 ease-in-out will-change-[opacity]",
+        )}
+      >
+        <div
+          className={cn(
+            "transition-opacity duration-300",
+            isConfigOpen ? "pointer-events-none opacity-0" : "opacity-100",
+          )}
+        >
+          <button
+            onClick={() => setIsConfigOpen(true)}
+            className="bg-glass/30 text-secondary border-secondary shadowDepthPrimary hover:bg-glass/50 rounded-full border-2 p-2 backdrop-blur-[4px] transition-all hover:shadow-lg"
+          >
+            <BsGearFill className="h-4 w-4" />
+          </button>
+          <span className="text-primary ml-2 text-base font-semibold">
+            Configure Funnel
           </span>
-          :
-        </p>
-        <div className="flex flex-wrap gap-4">
-          {aboutConfigs.map((config) => (
-            <button
-              key={config.title}
-              onClick={() => {
-                setFunnelData(config.data);
-                setSelectedStage(config.data?.[2] ?? config.data?.[0]);
-              }}
-              className={cn(
-                "cursor-pointer rounded-lg border px-5 py-2 text-sm font-semibold transition-all",
-                config.data === funnelData
-                  ? "bg-primary border-primary text-white shadow-md"
-                  : "border-primary/20 text-primary hover:bg-glass/30 hover:backdrop-blur-[2px]",
-              )}
-            >
-              {config.title}
-            </button>
-          ))}
         </div>
-        <div className="flex flex-col gap-3">
-          <p className="text-secondary text-lg font-semibold">
-            Choose a color scheme{" "}
-            <span className="text-primary text-sm">
-              (To change gradient colors)
-            </span>
-            :
-          </p>
-          <div className="flex flex-wrap gap-4">
-            {funnelColorConfigs.map(({ title, config }) => (
-              <button
-                key={title}
-                onClick={() => setColorConfig(config)}
-                className={cn(
-                  "cursor-pointer rounded-lg border px-5 py-2 text-sm font-semibold transition-all",
-                  config.gradientStart === colorConfig.gradientStart &&
-                    config.gradientEnd === colorConfig.gradientEnd
-                    ? "bg-primary border-primary text-white shadow-md"
-                    : "border-primary/20 text-primary hover:bg-glass/30 hover:backdrop-blur-[2px]",
-                )}
-              >
-                {title}
-              </button>
-            ))}
-          </div>
-        </div>
+        <ConfigPanel
+          onClose={() => setIsConfigOpen(false)}
+          funnelData={funnelData}
+          setFunnelData={setFunnelData}
+          setSelectedStage={setSelectedStage}
+          colorConfig={colorConfig}
+          setColorConfig={setColorConfig}
+          className={cn(
+            "absolute -bottom-2 -left-2 z-[100] origin-[25px_calc(100%-25px)] transition-transform duration-300 ease-in-out",
+            isConfigOpen
+              ? "pointer-events-auto visible scale-100"
+              : "pointer-events-none scale-0",
+          )}
+        />
       </div>
     </div>
   );
