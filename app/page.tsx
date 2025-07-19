@@ -32,7 +32,11 @@ const Home = () => {
     return () => observer.disconnect();
   }, []);
 
-  const scrollHeight = funnelHeight ? `${funnelHeight - 180}px` : "300px"; // adjust for title, buttons, padding
+  const scrollHeight = funnelHeight
+    ? `${funnelHeight - 180 > 0 ? funnelHeight - 180 : 100}px`
+    : "300px";
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div className="flex h-max min-h-screen flex-col pt-12 pr-4 pb-6 pl-32 sm:pr-32">
@@ -40,15 +44,36 @@ const Home = () => {
         {pageConfig.title}
       </h1>
 
-      <p className="text-secondary mt-6 text-sm sm:text-lg">
-        {pageConfig.description}
-      </p>
+      <div className="text-secondary relative mt-6 text-sm sm:text-lg">
+        <div
+          className={cn(
+            "relative transition-[max-height] duration-500 ease-in-out sm:max-h-none sm:overflow-visible",
+            isExpanded ? "overflow-visible" : "overflow-hidden",
+          )}
+          style={{
+            maxHeight: isExpanded ? "none " : "2.5rem",
+          }}
+        >
+          <p>{pageConfig.description}</p>
+
+          {!isExpanded && (
+            <div className="pointer-events-none absolute bottom-0 left-0 h-8 w-full bg-gradient-to-t from-white to-transparent sm:hidden" />
+          )}
+        </div>
+
+        <div className="mt-1 flex justify-end sm:hidden">
+          <button
+            className="text-primary text-xs font-semibold underline"
+            onClick={() => setIsExpanded((prev) => !prev)}
+          >
+            {isExpanded ? "Read less ↑" : "Read more ↓"}
+          </button>
+        </div>
+      </div>
 
       <div className="bg-accent-1 mt-4 mb-8 h-0.5 max-w-48 rounded-full" />
 
-      {/* Main Layout */}
       <div className="flex w-full flex-1 flex-col gap-6 lg:flex-row">
-        {/* Funnel Panel */}
         <div
           ref={funnelRef}
           className="relative flex min-w-[200px] flex-1 lg:w-[30%] lg:min-w-[300px]"
@@ -61,7 +86,6 @@ const Home = () => {
           />
         </div>
 
-        {/* Info Panel */}
         <InfoPanel
           funnelHeight={funnelHeight}
           scrollHeight={scrollHeight}

@@ -28,7 +28,7 @@ const InfoPanel = ({
       className={cn(
         "border-primary/10 bg-glass/20 relative flex flex-col gap-6 rounded-xl border p-6",
         "shadow-[0_2px_6px_rgba(1,42,74,0.15),_0_6px_12px_rgba(1,42,74,0.2),_0_12px_24px_rgba(1,42,74,0.25),_0_20px_32px_rgba(1,42,74,0.2),_0_32px_48px_rgba(1,42,74,0.15)]",
-        "text-primary flex flex-1 backdrop-blur-[6px]",
+        "text-primary min-w-[300px] backdrop-blur-[6px] lg:flex lg:flex-1",
         className,
       )}
       style={{
@@ -39,7 +39,6 @@ const InfoPanel = ({
     >
       <h2 className="text-3xl font-semibold">Implementation Notes</h2>
 
-      {/* Scrollable only this section */}
       <div
         className="border-primary/10 space-y-6 overflow-y-auto border-b-1 pr-2 text-base"
         style={{ maxHeight: scrollHeight }}
@@ -50,7 +49,6 @@ const InfoPanel = ({
             <p className="text-secondary mt-1">{description}</p>
           </div>
         ))}
-        {/* GitHub Link */}
         <div>
           View code on GitHub –{" "}
           <a
@@ -64,7 +62,6 @@ const InfoPanel = ({
         </div>
       </div>
 
-      {/* Config Switcher */}
       <div className="flex flex-col gap-3">
         <p className="text-secondary text-lg font-semibold">
           Choose a config{" "}
