@@ -73,26 +73,28 @@ const InfoPanel = ({
       </div>
       <div
         className={cn(
-          "relative flex items-center justify-start",
+          "relative flex items-center justify-end lg:justify-start",
           "translate-z-0 transition-opacity duration-300 ease-in-out will-change-[opacity]",
         )}
       >
         <div
           className={cn(
-            "transition-opacity duration-300",
+            "flex items-center gap-2 transition-opacity duration-300",
             isConfigOpen ? "pointer-events-none opacity-0" : "opacity-100",
           )}
         >
+          <span className="text-primary order-1 text-base font-semibold sm:order-2">
+            Configure Funnel
+          </span>
+
           <button
             onClick={() => setIsConfigOpen(true)}
-            className="bg-glass/30 text-secondary border-secondary shadowDepthPrimary hover:bg-glass/50 rounded-full border-2 p-2 backdrop-blur-[4px] transition-all hover:shadow-lg"
+            className="bg-glass/30 text-secondary border-secondary shadowDepthPrimary hover:bg-glass/50 order-2 rounded-full border-2 p-2 backdrop-blur-[4px] transition-all hover:shadow-lg sm:order-1"
           >
             <BsGearFill className="h-4 w-4" />
           </button>
-          <span className="text-primary ml-2 text-base font-semibold">
-            Configure Funnel
-          </span>
         </div>
+
         <ConfigPanel
           onClose={() => setIsConfigOpen(false)}
           funnelData={funnelData}
@@ -101,7 +103,11 @@ const InfoPanel = ({
           colorConfig={colorConfig}
           setColorConfig={setColorConfig}
           className={cn(
-            "absolute -bottom-2 -left-2 z-[100] origin-[25px_calc(100%-25px)] transition-transform duration-300 ease-in-out",
+            "absolute z-[100] w-72 rounded-3xl p-6 pb-16 sm:w-full sm:max-w-[550px]",
+            "-bottom-2",
+            "right-[-8px] sm:right-auto sm:left-[-8px]",
+            "origin-[calc(100%-25px)_calc(100%-25px)] sm:origin-[25px_calc(100%-25px)]",
+            "transition-transform duration-300 ease-in-out",
             isConfigOpen
               ? "pointer-events-auto visible scale-100"
               : "pointer-events-none scale-0",

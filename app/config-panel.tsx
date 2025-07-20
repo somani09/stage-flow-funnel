@@ -31,7 +31,6 @@ const ConfigPanel = ({
   className,
 }: ConfigPanelProps) => {
   const configPopupClasses = cn(
-    "absolute -bottom-2 -left-2 z-[100] w-72 rounded-3xl p-6 pb-16 sm:w-full sm:max-w-[550px]",
     "bg-glass/90",
     "border-primary/20 border-2",
     "backdrop-blur-[10px]",
@@ -46,7 +45,7 @@ const ConfigPanel = ({
     <div ref={ConfigPanelRef} className={cn(configPopupClasses, className)}>
       <IoIosCloseCircleOutline
         onClick={onClose}
-        className="text-primary absolute bottom-1 left-1 h-10 w-10 cursor-pointer"
+        className="text-primary absolute right-1 bottom-1 h-10 w-10 cursor-pointer sm:right-auto sm:left-1"
       />
 
       <div className="flex flex-col gap-6 pt-2">
