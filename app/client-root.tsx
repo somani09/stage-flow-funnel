@@ -14,9 +14,9 @@ export default function ClientRoot({
 
   return (
     <ThemeProvider
-      attribute="class" // Uses `class="light"` or `class="dark"`
-      defaultTheme="light" // Force light mode by default
-      enableSystem={false} // Disable system theme detection
+      attribute="class" 
+      defaultTheme="light" 
+      enableSystem={false} 
     >
       <div className="bg-glass/50 relative flex h-max">
         <button
